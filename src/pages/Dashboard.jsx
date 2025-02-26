@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import io from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://localhost:5000", { autoConnect: false });
+const socket = io("https://messaging-app-backend-phi.vercel.app", { autoConnect: false });
 
 const Dashboard = () => {
   const { user, users } = useContext(AuthContext);
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     axios
       .get(
-        `http://localhost:5000/api/messages/${user.userId}/${selectedUser._id}`
+        `https://messaging-app-backend-phi.vercel.app/api/messages/${user.userId}/${selectedUser._id}`
       )
       .then((res) => {
         setMessages(res.data);
@@ -61,7 +61,7 @@ const Dashboard = () => {
     setMessages((prev) => [...prev, message]);
 
     axios
-      .post("http://localhost:5000/api/messages", message)
+      .post("https://messaging-app-backend-phi.vercel.app/api/messages", message)
       .then(() => {
         socket.emit("sendMessage", message);
         setNewMessage("");

@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const { data } = await axios.post("http://localhost:5000/api/users/login", { email, password });
+            const { data } = await axios.post("https://messaging-app-backend-phi.vercel.app/api/users/login", { email, password });
             setUser(data);
             localStorage.setItem("user", JSON.stringify(data));
             socket.emit("setOnline", data.userId);
