@@ -3,7 +3,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 export const AuthContext = createContext();
-const socket = io("http://localhost:5000");
+const socket = io("https://messaging-app-backend-phi.vercel.app");
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
