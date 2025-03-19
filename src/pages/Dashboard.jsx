@@ -27,7 +27,7 @@ const Dashboard = () => {
 
     // Cleanup on component unmount
     return () => {
-      if (user) socket.emit("setOffline", user.userId);
+      if (user) socket.emit("setOffline", user?.userId);
       socket.disconnect(); // Disconnect socket when the component unmounts
     };
   }, [user]);
@@ -42,7 +42,7 @@ const Dashboard = () => {
     // Fetch messages from the API if they haven't been fetched already
     axios
       .get(
-        `https://messaging-app-backend-phi.vercel.app/api/messages/${user.userId}/${selectedUser._id}`
+        `https://messaging-app-backend-phi.vercel.app/api/messages/${user?.userId}/${selectedUser._id}`
       )
       .then((res) => {
         setMessages(res.data);
@@ -62,7 +62,7 @@ const Dashboard = () => {
     return () => {
       socket.off("receiveMessage");
     };
-  }, [selectedUser, user.userId]);
+  }, [selectedUser, user?.userId]);
 
   // ✅ Send message function
   const sendMessage = () => {
@@ -137,10 +137,10 @@ const Dashboard = () => {
             <div className="p-4">
               {selectedUser && (
                 <div className="flex gap-2">
-                  <span className="font-bold text-xl">{selectedUser.name}</span>
+                  <span className="font-bold text-xl">{selectedUser?.name}</span>
                   <span
                     className={`h-2 w-2 rounded-full ${
-                      selectedUser.online
+                      selectedUser?.online
                         ? "text-green-500 content-(--my-content) bg-green-500"
                         : "text-gray-400 bg-neutral-600 content-[offline]"
                     }`}
@@ -160,7 +160,7 @@ const Dashboard = () => {
                       : "bg-neutral-700 self-start text-left"
                   }`}
                 >
-                  {msg.sender === user.userId ? "Me" : selectedUser.name}:{" "}
+                  {msg.sender === user?.userId ? "Me" : selectedUser?.name}:{" "}
                   {msg.content}
                 </p>
               ))}
