@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
             socket.emit("setOnline", user.userId);
         }
 
-        axios.get("http://localhost:5000/api/users")
+        axios.get("https://messaging-app-backend-phi.vercel.app/api/users")
             .then((res) => {
                 setUsers(res.data);
                 setLoading(false);  // ✅ Ensure loading is completed
