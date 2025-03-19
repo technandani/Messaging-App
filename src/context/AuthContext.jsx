@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
         socket.on("userOnline", (data) => {
             setUsers((prevUsers) =>
                 prevUsers.map((u) =>
-                    u._id === data.userId ? { ...u, online: true } : u
+                    u._id === data?.userId ? { ...u, online: true } : u
                 )
             );
         });
