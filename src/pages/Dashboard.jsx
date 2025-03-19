@@ -15,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!socket.connected) {
       socket.connect();
-      socket.emit("setOnline", user.userId);
+      socket.emit("setOnline", user?.userId);
     }
   }, []);
 
