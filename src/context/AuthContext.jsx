@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            socket.emit("setOnline", user.userId);
+            socket.emit("setOnline", user?.userId);
         }
 
         axios.get("https://messaging-app-backend-phi.vercel.app/api/users")
@@ -41,13 +41,13 @@ export const AuthProvider = ({ children }) => {
         socket.on("userOffline", (data) => {
             setUsers((prevUsers) =>
                 prevUsers.map((u) =>
-                    u._id === data.userId ? { ...u, online: false } : u
+                    u._id === data?.userId ? { ...u, online: false } : u
                 )
             );
         });
 
         return () => {
-            if (user) socket.emit("setOffline", user.userId);
+            if (user) socket.emit("setOffline", user?.userId);
             socket.off("userOnline");
             socket.off("userOffline");
         };
@@ -58,14 +58,14 @@ export const AuthProvider = ({ children }) => {
             const { data } = await axios.post("https://messaging-app-backend-phi.vercel.app/api/users/login", { email, password });
             setUser(data);
             Cookies.set("user", JSON.stringify(data), { expires: 7 });  // Store user data in cookie
-            socket.emit("setOnline", data.userId);
+            socket.emit("setOnline", data?.userId);
         } catch (error) {
             console.error(error.response?.data?.error);
         }
     };
 
     const logout = () => {
-        if (user) socket.emit("setOffline", user.userId);
+        if (user) socket.emit("setOffline", user?.userId);
         setUser(null);
         Cookies.remove("user");  // Remove user cookie on logout
     };
