@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,10 @@ const Register = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    useEffect(()=>{
+      console.log("form data: ", formData);
+    },[formData])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

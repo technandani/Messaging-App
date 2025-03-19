@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import ChatRoom from "./pages/ChatRoom";
+// import ChatRoom from "./pages/ChatRoom";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/" element={<Dashboard />} />
-          <Route path="/chat/:receiverId" element={<ChatRoom />} />
+          {/* <Route path="/chat/:receiverId" element={<ChatRoom />} /> */}
         </Routes>
       </div>
     </AuthProvider>

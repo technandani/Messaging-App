@@ -1,28 +1,29 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
+import Cookies from "js-cookie"; 
 
 export const AuthContext = createContext();
-const socket = io("http://localhost:5000");
+const socket = io("https://messaging-app-backend-phi.vercel.app");
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user"); 
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
     const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);  // ✅ Added loading state
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (user) {
             socket.emit("setOnline", user.userId);
         }
 
-        axios.get("http://localhost:5000/api/users")
+        axios.get("https://messaging-app-backend-phi.vercel.app/api/users")
             .then((res) => {
                 setUsers(res.data);
-                setLoading(false);  // ✅ Ensure loading is completed
+                setLoading(false);
             })
             .catch((err) => {
                 console.error("Error fetching users:", err);
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await axios.post("https://messaging-app-backend-phi.vercel.app/api/users/login", { email, password });
             setUser(data);
-            localStorage.setItem("user", JSON.stringify(data));
+            Cookies.set("user", JSON.stringify(data), { expires: 7 });  // Store user data in cookie
             socket.emit("setOnline", data.userId);
         } catch (error) {
             console.error(error.response?.data?.error);
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         if (user) socket.emit("setOffline", user.userId);
         setUser(null);
-        localStorage.removeItem("user");
+        Cookies.remove("user");  // Remove user cookie on logout
     };
 
     return (
